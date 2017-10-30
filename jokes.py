@@ -1,8 +1,9 @@
 import requests
 import hashlib
 import time
+import csv
 
-amount = int(input("How many blocks do you want to inport?"))
+amount = int(input("How many blocks do you want to inport? "))
 
 dataBaseId=0
 dadaBase = [["id", "title", "punchline", "time", "upvotes", "user", "hash"]]
@@ -18,9 +19,9 @@ def jokeHash(title, punchline, date, user):
 
 for count in range(amount):
 	r = requests.get('http://www.reddit.com/r/dadjokes/top/.json?sort=top&t=all&after='+nextRequest, headers=userAgent)
-	data = r.json()
-	data=data['data']['children']
-	nextRequest=['data']['children']['after']
+	rawData = r.json()
+	data=rawData['data']['children']
+	nextRequest=rawData['data']['after']
 
 	for joke in data:
 		title=joke['data']['title']
@@ -42,5 +43,13 @@ for count in range(amount):
 
 	time.sleep(2)
 
-print(dadaBase)
-print(dadaBaseReact)
+writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBase.csv", "rw"))
+for row in dadaBase:
+	writer.writerow(row)
+
+writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBaseReact.csv", "rw"))
+for row in dadaBaseReact:
+	writer.writerow(row)
+
+print("Wrote data on "+str(len(dadaBase)+" dad jokes."))
+print("Done.")
