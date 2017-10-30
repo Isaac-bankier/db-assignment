@@ -2,22 +2,18 @@ import requests
 import hashlib
 
 usera = {'User-agent': 'DadJokeFinder v1.1'}
-r = requests.get('http://www.reddit.com/r/dadjokes/top/.json', headers=usera)
+r = requests.get('http://www.reddit.com/r/dadjokes/top/.json?sort=top&t=all', headers=usera)
 data = r.json()
 
-title=""
-punchline=""
 data=data['data']['children']
 dataBaseId=0
-edited
-
 
 dadaBase = [["id", "title", "punchline", "time", "upvotes", "user", "hash"]]
 dadaBaseReact = [["id","upvotes", "edited", "uncle joke", "archived", "comments", "hash"]]
 
 def jokeHash(title, punchline, date, user):
 	hasher = hashlib.sha512()
-	hasher.update(title + punchline + date + user)
+	hasher.update(title.encode('ascii', 'ignore') + punchline.encode('ascii', 'ignore') + str(date).encode('ascii', 'ignore') + user.encode('ascii', 'ignore'))
 	return 	hasher.hexdigest()
 
 for joke in data:
