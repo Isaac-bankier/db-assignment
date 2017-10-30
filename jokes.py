@@ -22,6 +22,7 @@ try:
 		rawData = r.json()
 		data=rawData['data']['children']
 		nextRequest=rawData['data']['after']
+		print(nextRequest)
 
 		for joke in data:
 			title=joke['data']['title']
