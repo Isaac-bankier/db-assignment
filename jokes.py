@@ -11,6 +11,8 @@ title=""
 punchline=""
 data=data['data']['children']
 
+
+
 for joke in data:
 	title=joke['data']['title']
 	punchline=joke['data']['selftext']
