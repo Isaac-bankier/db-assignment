@@ -41,8 +41,6 @@ finally:
         print("\n")
         print(chain2.generateData())
         print("------------------------------------------------")
-        print("\n")
-        print("\n")
-        print("\n")
+        print("\n\n")
 
 print("Done.")
