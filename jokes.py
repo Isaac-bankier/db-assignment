@@ -9,7 +9,7 @@ dataBaseId=0
 dadaBase = [["id", "title", "punchline", "time", "upvotes", "user", "hash"]]
 dadaBaseReact = [["id","upvotes", "edited", "uncle joke", "archived", "comments", "hash"]]
 nextRequest=''
-userAgent = {'User-agent': 'DadJokeFinder v1.4'}
+userAgent = {'User-agent': 'DadJokeFinder v1.6'}
 count = 0
 
 def jokeHash(title, punchline, date, user):
@@ -22,7 +22,6 @@ try:
 		rawData = r.json()
 		data=rawData['data']['children']
 		nextRequest=rawData['data']['after']
-		print(nextRequest)
 
 		for joke in data:
 			title=joke['data']['title']
