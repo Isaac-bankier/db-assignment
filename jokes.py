@@ -2,6 +2,7 @@ import requests
 import hashlib
 import time
 import csv
+import string
 
 amount = int(input("How many blocks do you want to inport? "))
 
@@ -11,6 +12,8 @@ dadaBaseReact = [["id","upvotes", "edited", "uncle joke", "archived", "comments"
 nextRequest=''
 userAgent = {'User-agent': 'DadJokeFinder v1.6'}
 count = 0
+
+translator = str.maketrans('', '', ",.;:'\"\\/\n")
 
 def jokeHash(title, punchline, date, user):
 	hasher = hashlib.sha512()
@@ -24,17 +27,17 @@ try:
 		nextRequest=rawData['data']['after']
 
 		for joke in data:
-			title=joke['data']['title']
-			punchline=joke['data']['selftext']
+			title=joke['data']['title'].translate(translator)
+			punchline=joke['data']['selftext'].translate(translator)
 			dataBaseId+=1
 			edited=joke['data']['edited']
 			over_18=joke['data']['over_18']
-			user=joke['data']['author']
+			user=joke['data']['author'].translate(translator)
 			postTime=joke['data']['created_utc']
 			upvotes=joke['data']['score']
 			archived=joke['data']['archived']
 			comments=joke['data']['num_comments']
-			hash = jokeHash(title, punchline, postTime, user)
+			hash = jokeHash(title, punchline, postTime, user).translate(translator)
 
 			databasePush = [dataBaseId, title, punchline, postTime, upvotes, user, hash]
 			database2Push = [dataBaseId, upvotes, edited, over_18, archived, comments, hash]
@@ -44,11 +47,11 @@ try:
 		time.sleep(2)
 
 finally:
-	writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBase.csv", "w"))
+	writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBase2.csv", "w"), dialect="excel")
 	for row in dadaBase:
 		writer.writerow(row)
 
-	writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBaseReact.csv", "w"))
+	writer = csv.writer(open("/home/isaac/Documents/code/database-assignment-year-9/dadaBaseReact2.csv", "w"), dialect="excel")
 	for row in dadaBaseReact:
 		writer.writerow(row)
 
