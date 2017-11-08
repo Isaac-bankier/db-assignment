@@ -30,10 +30,10 @@ try:
 			title=joke['data']['title'].translate(translator)
 			punchline=joke['data']['selftext'].translate(translator)
 			dataBaseId+=1
-			edited=joke['data']['edited']
+			edited= (joke['data']['edited'] != False if time.gmtime((joke['data']['edited'])) else (False))
 			over_18=joke['data']['over_18']
 			user=joke['data']['author'].translate(translator)
-			postTime=joke['data']['created_utc']
+			postTime=time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(joke['data']['created_utc']))
 			upvotes=joke['data']['score']
 			archived=joke['data']['archived']
 			comments=joke['data']['num_comments']
